@@ -8,10 +8,10 @@
 import UIKit
 
  class CustomTextField: UITextField {
-    
+  
     //MARK: - Lifecycle
     
-    init (placeholder: String) {
+    init (placeholder: String, type: UIKeyboardType = .default, secureTextEntry: Bool = false) {
         super.init(frame: .zero)
         
         let spacer = UIView()
@@ -19,8 +19,8 @@ import UIKit
         leftView = spacer
         leftViewMode = .always
 
-        keyboardType = .default
-        layer.cornerRadius = 10
+        keyboardType = type
+        layer.cornerRadius = 5
         enablesReturnKeyAutomatically = true
         returnKeyType = .done
         clearButtonMode = .whileEditing
@@ -29,13 +29,16 @@ import UIKit
         textColor = .black
         keyboardAppearance = .dark
         backgroundColor = UIColor(white: 1, alpha: 0.1)
+        isSecureTextEntry = secureTextEntry
         setHeight(50)
         
         attributedPlaceholder = NSAttributedString(string: placeholder,
                                                    attributes: [.foregroundColor : UIColor.lightGray])
-    }
+        }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+

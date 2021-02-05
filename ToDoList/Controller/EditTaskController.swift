@@ -12,12 +12,21 @@ class EditTaskController: UIViewController {
     //MARK: - Properties
 
     let editTaskTextfield = CustomTextField(placeholder: "Add task")
+    private let task: Task
+    private let characterCountLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.text = "0/100"
+       
+       return label
+   }()
   
-        
     //MARK: - Lifecycle
     
     init(task: Task) {
         editTaskTextfield.text = task.title
+        self.task = task
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -35,7 +44,11 @@ class EditTaskController: UIViewController {
         configureNavBar()
     }
     
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: nil)
+    }
+    
         //MARK: - Helper Methods
     
     func configureNavBar() {
@@ -44,6 +57,9 @@ class EditTaskController: UIViewController {
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = saveButton
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange),
+                                               name: UITextField.textDidChangeNotification, object: nil)
     }
         
     func configureUi() {
@@ -53,15 +69,27 @@ class EditTaskController: UIViewController {
         editTaskTextfield.centerX(inView: view)
         editTaskTextfield.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
                                 paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(characterCountLabel)
+        characterCountLabel.anchor(bottom: editTaskTextfield.bottomAnchor, right: editTaskTextfield.rightAnchor, paddingBottom: -18)
+        
         editTaskTextfield.becomeFirstResponder()
         editTaskTextfield.delegate = self
         
     }
     
         //MARK: - Actions
+    
+    @objc func textDidChange() {
+        checkMaxLength(editTaskTextfield)
+        guard let count = editTaskTextfield.text?.count else {return}
+        characterCountLabel.text = "\(count)/100"
+    }
+    
     @objc func handleSaveTask () {
         navigationController?.popViewController(animated: true)
-        print("DEBUG: handle save task here")
+        guard let newTitle = editTaskTextfield.text else {return}
+        Service.editTask(title: newTitle, taskUid: task.uid)
     }
     
     @objc func handleCancel () {
@@ -81,12 +109,7 @@ class EditTaskController: UIViewController {
         }
         
         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-            guard range.location == 0 else {
-                    return true
-                }
-
-                let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string) as NSString
-                return newString.rangeOfCharacter(from: CharacterSet.whitespacesAndNewlines).location != 0
+            restrictWhiteSpaces(textField: textField, range: range, replacementString: string)
         }
     }
 

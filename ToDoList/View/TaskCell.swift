@@ -53,7 +53,6 @@ class TaskCell: UITableViewCell {
         return button
     }()
     
-        let divider = UIView()
 
     
     
@@ -73,14 +72,8 @@ class TaskCell: UITableViewCell {
         addSubview(taskLabel)
         taskLabel.anchor(top: topAnchor, left: checkMarkButton.rightAnchor , bottom: bottomAnchor,
                          right: deleteButton.leftAnchor, paddingLeft: 8, paddingRight: 8)
-        
-        divider.backgroundColor = .lightGray
-        
-        addSubview(divider)
-        divider.centerY(inView: self)
-        divider.anchor( left: leftAnchor, right: rightAnchor,
-                        paddingLeft: 60, paddingRight: 60,
-                        height: 0.5)
+                
+    
     }
     
     required init?(coder: NSCoder) {
@@ -89,23 +82,39 @@ class TaskCell: UITableViewCell {
     
     //MARK: - Helpers
     
-    func setupCheckmarkButton(withImageTitle title: String, tintColor: UIColor, textColor: UIColor, buttonIsHidden: Bool) {
-        checkMarkButton.setImage(UIImage(systemName: title), for: .normal)
-        checkMarkButton.tintColor = tintColor
-        taskLabel.textColor = textColor
-        deleteButton.isHidden = buttonIsHidden
-        divider.isHidden = !buttonIsHidden
+    func setupButtons(isCompleted: Bool) {
+        
+        if isCompleted {
+            checkMarkButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            checkMarkButton.tintColor = .systemGreen
+        } else {
+            checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+            checkMarkButton.tintColor = .black
+        }
     }
+    
+    func setupTitleLabel(isCompleted: Bool) {
+        guard let task = self.task else {return}
+        
+        let attributedString: NSMutableAttributedString =  NSMutableAttributedString(string: task.title)
+            attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributedString.length))
+        
+        if isCompleted {
+                taskLabel.attributedText = attributedString
+                taskLabel.textColor = .lightGray
+        } else {
+                taskLabel.attributedText = nil
+                taskLabel.text = task.title
+                taskLabel.textColor = .black
+        }
+    }
+    
     
     func configure() {
         guard let task = self.task else {return}
-        taskLabel.text = task.title
-        
-        if task.isCompleted {
-            setupCheckmarkButton(withImageTitle: "checkmark", tintColor: .systemGreen, textColor: .lightGray, buttonIsHidden: true)
-            divider.isHidden = false
-        } else {
-            setupCheckmarkButton(withImageTitle: "square", tintColor: .black, textColor: .black, buttonIsHidden: false)
+        DispatchQueue.main.async {
+            self.setupButtons(isCompleted: task.isCompleted)
+            self.setupTitleLabel(isCompleted: task.isCompleted)
         }
     }
     

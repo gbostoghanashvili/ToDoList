@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 extension UIView {
     func anchor(top: NSLayoutYAxisAnchor? = nil,
@@ -95,3 +96,56 @@ extension UIView {
                bottom: view.bottomAnchor, right: view.rightAnchor)
     }
 }
+
+
+extension UIViewController {
+    static let hud = JGProgressHUD(style: .dark)
+
+
+    func checkMaxLength(_ textField: UITextField) {
+        guard let text = textField.text else {return}
+        if (text.count) > 100 {
+            textField.deleteBackward()
+        }
+    }
+    
+    func dismissKeyboard(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self,
+                                                                  action: #selector(handleDismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+     @objc private func handleDismissKeyboard(){
+        view.endEditing(true)
+    }
+    
+    func restrictWhiteSpaces(textField: UITextField, range: NSRange, replacementString string: String) -> Bool {
+        guard range.location == 0 else {
+                return true
+            }
+            let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string) as NSString
+            return newString.rangeOfCharacter(from: CharacterSet.whitespacesAndNewlines).location != 0
+    }
+    
+    func showLoader(_ show: Bool) {
+        view.endEditing(true)
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {return}
+            if show {
+                UIViewController.hud.show(in: self.view)
+            } else {
+                UIViewController.hud.dismiss()
+            }
+        }
+    }
+    
+    func showMessage(withTitle title: String, message: String, dissmissalText: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: dissmissalText, style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+
