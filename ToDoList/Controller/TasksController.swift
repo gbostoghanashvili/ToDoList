@@ -24,14 +24,26 @@ class TasksController: UIViewController {
         let label = UILabel()
          label.textColor = .lightGray
          label.font = UIFont.systemFont(ofSize: 14)
-         label.text = "0/100"
+         label.text = "0/50"
        
        return label
    }()
     private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Logout", for: .normal)
+        button.tintColor = .black
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var userProfileButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "person.circle"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(handleShowUserProfile), for: .touchUpInside)
+        button.setDimensions(height: 30, width: 30)
         
         return button
     }()
@@ -98,17 +110,24 @@ class TasksController: UIViewController {
     }
     
     func setConstraintsForViews() {
+        view.addSubview(logoutButton)
+        logoutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,paddingTop: 12, paddingLeft: 12)
+        
+        view.addSubview(userProfileButton)
+        userProfileButton.centerY(inView: logoutButton)
+        userProfileButton.anchor(right: view.rightAnchor, paddingRight: 12)
+        
+        
         view.addSubview(addTaskTextfield)
         addTaskTextfield.centerX(inView: view)
-        addTaskTextfield.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
+        addTaskTextfield.anchor(top: logoutButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                                 paddingTop: 32, paddingLeft: 32, paddingRight: 32)
         addTaskTextfield.delegate = self
         
         view.addSubview(characterCountLabel)
         characterCountLabel.anchor(bottom: addTaskTextfield.bottomAnchor, right: addTaskTextfield.rightAnchor, paddingBottom: -18)
         
-        view.addSubview(logoutButton)
-        logoutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 8)
+        
     }
     
     func configureTableView() {
@@ -121,7 +140,7 @@ class TasksController: UIViewController {
         tableView.isScrollEnabled = true
         tableView.separatorStyle = .none
         
-        tableView.rowHeight = 80
+        tableView.rowHeight = 60
         
         tableView.tableFooterView = UIView()
     }
@@ -135,28 +154,44 @@ class TasksController: UIViewController {
         
         present(nav, animated: true)
     }
+    
+    func presentLogoutAlert(){
+        let alert = UIAlertController(title: "Log out?", message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let logoutAction = UIAlertAction(title: "Log out", style: .default) { _ in
+            do {
+                try Auth.auth().signOut()
+                self.presentLoginController()
+                
+            } catch {
+                print("DEBUG: Failed to sign out")
+            }
+        }
+        alert.addAction(logoutAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
   
     //MARK: - Actions
     
     @objc func textDidChange() {
         checkMaxLength(addTaskTextfield)
         guard let count = addTaskTextfield.text?.count else {return}
-        characterCountLabel.text = "\(count)/100"
+        characterCountLabel.text = "\(count)/50"
     }
     
     @objc func handleLogout() {
-        do {
-            try Auth.auth().signOut()
-            presentLoginController()
-            
-        } catch {
-            print("DEBUG: Failed to sign out")
-        }
+        presentLogoutAlert()
     }
     
     @objc func handleRefresh() {
         tasks.removeAll()
         fetchTasks()
+        }
+    
+    @objc func handleShowUserProfile() {
+        let controller = UserProfileController()
+        navigationController?.pushViewController(controller, animated: true)
         }
     }
 
@@ -193,8 +228,7 @@ extension TasksController: UITableViewDelegate {
 
 extension TasksController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        let title = textField.text!
+        guard let title = textField.text else {return false}
         let uuid = NSUUID().uuidString
         setData(uid: uuid, title: title)
 
@@ -209,7 +243,7 @@ extension TasksController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        characterCountLabel.text = "0/100"
+        characterCountLabel.text = "0/50"
     }
 }
 

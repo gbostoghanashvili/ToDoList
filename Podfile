@@ -9,6 +9,8 @@ target 'ToDoList' do
 	pod 'Firebase/Database'
 	pod 'Firebase/Firestore'
 	pod 'Firebase/Auth'
+	pod 'Firebase/Storage'
 	pod 'JGProgressHUD'
+	pod 'SDWebImage', '~> 5.0'
 
 end

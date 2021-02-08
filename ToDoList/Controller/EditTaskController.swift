@@ -17,11 +17,13 @@ class EditTaskController: UIViewController {
        let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "0/100"
+        label.text = "0/50"
        
        return label
    }()
   
+    private lazy var saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSaveTask))
+
     //MARK: - Lifecycle
     
     init(task: Task) {
@@ -53,7 +55,6 @@ class EditTaskController: UIViewController {
     
     func configureNavBar() {
         navigationController?.navigationBar.isHidden = false
-        let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSaveTask))
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = saveButton
@@ -81,20 +82,28 @@ class EditTaskController: UIViewController {
         //MARK: - Actions
     
     @objc func textDidChange() {
+        guard let text = editTaskTextfield.text else {return}
+        if !text.isEmpty {
+            saveButton.isEnabled = true
+        } else {
+            saveButton.isEnabled = false
+        }
+        
         checkMaxLength(editTaskTextfield)
         guard let count = editTaskTextfield.text?.count else {return}
-        characterCountLabel.text = "\(count)/100"
+        characterCountLabel.text = "\(count)/50"
     }
     
     @objc func handleSaveTask () {
+        
         navigationController?.popViewController(animated: true)
         guard let newTitle = editTaskTextfield.text else {return}
         Service.editTask(title: newTitle, taskUid: task.uid)
+        
     }
     
     @objc func handleCancel () {
         navigationController?.popViewController(animated: true)
-        print("DEBUG: handle cancel action here")
     }
 
 }

@@ -54,7 +54,9 @@ extension LoginController: LoginViewDelegate {
     }
     
     func handleRecoverPassword() {
-        print("DEBUG: handle recover password here")
+        let controller = RecoverPasswordController()
+        controller.email = loginView.emailTextField.text
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func handleShowSignUpPage() {

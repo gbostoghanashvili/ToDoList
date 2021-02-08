@@ -5,6 +5,7 @@
 //  Created by Giorgi on 2/5/21.
 //
 
+
 import Foundation
 
 struct AuthCredentials {
@@ -18,10 +19,12 @@ struct User {
     let email: String
     let username: String
     let uid: String
+    let profileImageUrl: String?
     
     init (dictionary: [String : Any]) {
         self.email = dictionary["email"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
         self.uid = dictionary["uid"] as? String ?? ""
+        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
     }
 }

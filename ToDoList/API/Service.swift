@@ -8,6 +8,18 @@
 import Firebase
 
 struct Service {
+    static func fetchUser(completion: @escaping(User) -> Void) {
+        guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
+        
+        API.collectionUsers.document(currentUserUid).getDocument { (snapshot, error) in
+            guard let data = snapshot?.data() else {return}
+            let user = User(dictionary: data)
+            print(user)
+            completion(user)
+            
+        }
+    }
+    
     static func setData(taskUid uid: String, title: String) {
         guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
         
@@ -48,5 +60,9 @@ struct Service {
     static func changeCompletionStatus(forTaskId uid: String, completionStatus status: Bool) {
         guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
         API.collectionUsers.document(currentUserUid).collection("tasks").document(uid).updateData(["isCompleted": status])
+    }
+    
+    static func setProfileImageUrl(forUser user: User, imageUrl url: String) {
+        API.collectionUsers.document(user.uid).updateData(["profileImageUrl" : url])
     }
 }
