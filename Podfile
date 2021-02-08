@@ -6,6 +6,7 @@ target 'ToDoList' do
   use_frameworks!
 
   # Pods for ToDoList
+	pod 'Firebase/Core'
 	pod 'Firebase/Database'
 	pod 'Firebase/Firestore'
 	pod 'Firebase/Auth'
@@ -13,4 +14,9 @@ target 'ToDoList' do
 	pod 'JGProgressHUD'
 	pod 'SDWebImage', '~> 5.0'
 
+
+target 'ToDoListTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
 end

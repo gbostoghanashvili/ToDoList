@@ -13,10 +13,11 @@ class AuthenticationButton: UIButton {
        super.init(frame: .zero)
        setTitle(title, for: .normal)
        setTitleColor(.white, for: .normal)
-       backgroundColor = UIColor.systemBlue
+    backgroundColor = UIColor.systemBlue.withAlphaComponent(0.5)
        layer.cornerRadius = 5
        setHeight(50)
        titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+       isEnabled = false
    }
    
    required init?(coder: NSCoder) {

@@ -32,12 +32,29 @@ class LoginView: UIView {
         return button
     }()
     
+    var email: String?
+    var password: String?
+    
+    var formIsValid: Bool {
+        return email?.isEmpty == false && password?.isEmpty == false
+    }
+    
+    var buttonBackgroundColor: UIColor {
+        return formIsValid ? UIColor.systemBlue : UIColor.systemBlue.withAlphaComponent(0.5)
+    }
+    
+    var buttonTitleColor: UIColor {
+        return formIsValid ? .white : UIColor(white: 1, alpha: 0.7)
+    }
+
+    
     //MARK: - Lifecycle
     
    override init(frame: CGRect) {
         super.init(frame: frame)
         configureConstraints(stack: configureStack())
-        addTargetsToButtons()
+        addTargets()
+    
         
     }
     
@@ -67,10 +84,12 @@ class LoginView: UIView {
         return stack
     }
     
-    func addTargetsToButtons() {
+    func addTargets() {
         loginButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         forgotPasswordButton.addTarget(self, action: #selector(handleRecoverPassword), for: .touchUpInside)
         dontHaveAccountButton.addTarget(self, action: #selector(handleShowSignUpPage), for: .touchUpInside)
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
     
@@ -88,5 +107,16 @@ class LoginView: UIView {
     
     @objc func handleShowSignUpPage() {
         delegate?.handleShowSignUpPage()
+    }
+    
+    @objc func textDidChange (sender: UITextField) {
+        if sender == emailTextField {
+            email = sender.text
+        } else {
+            password = sender.text
+        }
+        loginButton.backgroundColor = buttonBackgroundColor
+        loginButton.setTitleColor(buttonTitleColor, for: .normal)
+        loginButton.isEnabled = formIsValid
     }
 }

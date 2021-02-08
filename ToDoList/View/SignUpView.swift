@@ -24,6 +24,22 @@ class SignUpView: UIView {
             let usernameTextField = CustomTextField(placeholder: "Username")
             let passwordTextField = CustomTextField(placeholder: "Password", secureTextEntry: true)
     
+    var email: String?
+    var username: String?
+    var password: String?
+    
+    var formIsValid: Bool {
+        return email?.isEmpty == false && username?.isEmpty == false && password?.isEmpty == false
+    }
+    
+    var buttonBackgroundColor: UIColor {
+        return formIsValid ? UIColor.systemBlue : UIColor.systemBlue.withAlphaComponent(0.5)
+    }
+    
+    var buttonTitleColor: UIColor {
+        return formIsValid ? .white : UIColor(white: 1, alpha: 0.7)
+    }
+    
     //MARK: - Lifecycle
     
    override init(frame: CGRect) {
@@ -60,6 +76,9 @@ class SignUpView: UIView {
     func addTargets() {
         signUpButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         alreadyHaveAccountButton.addTarget(self, action: #selector(handleShowLoginPage), for: .touchUpInside)
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
     //MARK: - Actions
@@ -70,5 +89,18 @@ class SignUpView: UIView {
     
     @objc func handleShowLoginPage() {
         delegate?.handleShowLoginPage()
+    }
+    
+    @objc func textDidChange (sender: UITextField) {
+        if sender == emailTextField {
+            email = sender.text
+        } else if sender == usernameTextField{
+            username = sender.text
+        } else {
+            password = sender.text
+        }
+        signUpButton.backgroundColor = buttonBackgroundColor
+        signUpButton.setTitleColor(buttonTitleColor, for: .normal)
+        signUpButton.isEnabled = formIsValid
     }
 }
