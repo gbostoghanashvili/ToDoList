@@ -19,7 +19,7 @@
 		CE4C20D725CBE9E3009FDBD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C20D625CBE9E3009FDBD9 /* Extensions.swift */; };
 		CE4C20DA25CBECD5009FDBD9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C20D925CBECD5009FDBD9 /* Task.swift */; };
 		CE4C20DD25CBF185009FDBD9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C20DC25CBF185009FDBD9 /* CustomTextField.swift */; };
-		CE4C20E225CC0C48009FDBD9 /* EditTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C20E125CC0C48009FDBD9 /* EditTaskController.swift */; };
+		CE4C20E225CC0C48009FDBD9 /* EditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C20E125CC0C48009FDBD9 /* EditController.swift */; };
 		CE4C20FC25CD294A009FDBD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4C20FB25CD294A009FDBD9 /* GoogleService-Info.plist */; };
 		CE4C20FF25CD2989009FDBD9 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C20FE25CD2989009FDBD9 /* Service.swift */; };
 		CE4C210225CD2991009FDBD9 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C210125CD2991009FDBD9 /* AuthService.swift */; };
@@ -36,6 +36,9 @@
 		CEF5726B25D14A9900A692AF /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5726A25D14A9900A692AF /* ImageService.swift */; };
 		CEF5726E25D14ADC00A692AF /* RecoverPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5726D25D14ADC00A692AF /* RecoverPasswordController.swift */; };
 		CEF572A325D14D5700A692AF /* ToDoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572A225D14D5700A692AF /* ToDoListTests.swift */; };
+		CEF572F825D1658A00A692AF /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572F725D1658A00A692AF /* ContainerController.swift */; };
+		CEF572FC25D1659100A692AF /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572FB25D1659100A692AF /* MenuController.swift */; };
+		CEF5730025D165CD00A692AF /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572FF25D165CD00A692AF /* MenuHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +68,7 @@
 		CE4C20D625CBE9E3009FDBD9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CE4C20D925CBECD5009FDBD9 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		CE4C20DC25CBF185009FDBD9 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		CE4C20E125CC0C48009FDBD9 /* EditTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskController.swift; sourceTree = "<group>"; };
+		CE4C20E125CC0C48009FDBD9 /* EditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditController.swift; sourceTree = "<group>"; };
 		CE4C20FB25CD294A009FDBD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		CE4C20FE25CD2989009FDBD9 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		CE4C210125CD2991009FDBD9 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -84,6 +87,9 @@
 		CEF572A025D14D5700A692AF /* ToDoListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF572A225D14D5700A692AF /* ToDoListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListTests.swift; sourceTree = "<group>"; };
 		CEF572A425D14D5700A692AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEF572F725D1658A00A692AF /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
+		CEF572FB25D1659100A692AF /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		CEF572FF25D165CD00A692AF /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
 		EC48A698A22C1F24FDD0338A /* Pods_ToDoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBD52B37314EA4B0B971D63 /* Pods-ToDoListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoListTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoListTests/Pods-ToDoListTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,9 +195,10 @@
 		CE4C20CF25CBE7B0009FDBD9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				CEF572F625D1655E00A692AF /* SideMenu */,
 				CE4C210425CD2999009FDBD9 /* Authentication */,
 				CE4C20BA25CBE6E0009FDBD9 /* TasksController.swift */,
-				CE4C20E125CC0C48009FDBD9 /* EditTaskController.swift */,
+				CE4C20E125CC0C48009FDBD9 /* EditController.swift */,
 				CEF5726425D14A5A00A692AF /* UserProfileController.swift */,
 			);
 			path = Controller;
@@ -207,6 +214,7 @@
 				CE4C210C25CD2A01009FDBD9 /* LoginView.swift */,
 				CE4C211725CD2B45009FDBD9 /* SignUpView.swift */,
 				CEF5726725D14A6F00A692AF /* UserProfileView.swift */,
+				CEF572FF25D165CD00A692AF /* MenuHeader.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,6 +245,15 @@
 				CEF572A425D14D5700A692AF /* Info.plist */,
 			);
 			path = ToDoListTests;
+			sourceTree = "<group>";
+		};
+		CEF572F625D1655E00A692AF /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				CEF572F725D1658A00A692AF /* ContainerController.swift */,
+				CEF572FB25D1659100A692AF /* MenuController.swift */,
+			);
+			path = SideMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,7 +426,8 @@
 			files = (
 				CE4C210625CD29A9009FDBD9 /* LoginController.swift in Sources */,
 				CE4C211325CD2AFD009FDBD9 /* AttributedButton.swift in Sources */,
-				CE4C20E225CC0C48009FDBD9 /* EditTaskController.swift in Sources */,
+				CE4C20E225CC0C48009FDBD9 /* EditController.swift in Sources */,
+				CEF5730025D165CD00A692AF /* MenuHeader.swift in Sources */,
 				CE4C212725CD352A009FDBD9 /* Constants.swift in Sources */,
 				CE4C20DD25CBF185009FDBD9 /* CustomTextField.swift in Sources */,
 				CEF5726E25D14ADC00A692AF /* RecoverPasswordController.swift in Sources */,
@@ -423,10 +441,12 @@
 				CE4C211025CD2A3C009FDBD9 /* AuthenticationButton.swift in Sources */,
 				CE4C20DA25CBECD5009FDBD9 /* Task.swift in Sources */,
 				CE4C211825CD2B45009FDBD9 /* SignUpView.swift in Sources */,
+				CEF572FC25D1659100A692AF /* MenuController.swift in Sources */,
 				CEF5726825D14A6F00A692AF /* UserProfileView.swift in Sources */,
 				CE4C210D25CD2A01009FDBD9 /* LoginView.swift in Sources */,
 				CE4C210A25CD29B1009FDBD9 /* SignUpController.swift in Sources */,
 				CE4C20B925CBE6E0009FDBD9 /* SceneDelegate.swift in Sources */,
+				CEF572F825D1658A00A692AF /* ContainerController.swift in Sources */,
 				CE4C212425CD3393009FDBD9 /* User.swift in Sources */,
 				CEF5726B25D14A9900A692AF /* ImageService.swift in Sources */,
 			);

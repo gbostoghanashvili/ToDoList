@@ -30,9 +30,6 @@ class SignUpController: UIViewController {
                          bottom: view.bottomAnchor, right: view.rightAnchor)
         signUpView.delegate = self
     }
-
-    
-    
 }
 
 extension SignUpController: SignUpViewDelegate {

@@ -11,6 +11,8 @@ import SDWebImage
 protocol UserProfileViewDelegate: class {
     func handleBackButtonTapped()
     func handleShowImagePicker()
+    func handleEditUsername()
+    func handleEditEmail()
 }
 
 class UserProfileView: UIView {
@@ -55,18 +57,33 @@ class UserProfileView: UIView {
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 16)
         
         return label
     }()
     
     private let emailLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
 
         return label
     }()
     
+    private lazy var editUsernameButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("edit", for: .normal)
+        button.addTarget(self, action: #selector(handleEditUsername), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var editEmailButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("edit", for: .normal)
+        button.addTarget(self, action: #selector(handleEditEmail), for: .touchUpInside)
+        
+        return button
+    }()
     
     
     //MARK: - Lifecycle
@@ -86,12 +103,18 @@ class UserProfileView: UIView {
         addPhotoButton.anchor(top: profileImageView.bottomAnchor, paddingTop: 8)
         
         addSubview(usernameLabel)
-        usernameLabel.centerX(inView: addPhotoButton)
-        usernameLabel.anchor(top: addPhotoButton.bottomAnchor, paddingTop: 20)
+        usernameLabel.anchor(top: addPhotoButton.bottomAnchor, left: leftAnchor, paddingTop: 40, paddingLeft: 40)
+        
+        addSubview(editUsernameButton)
+        editUsernameButton.centerY(inView: usernameLabel)
+        editUsernameButton.anchor(right: rightAnchor, paddingRight: 40)
         
         addSubview(emailLabel)
-        emailLabel.centerX(inView: usernameLabel)
-        emailLabel.anchor(top: usernameLabel.bottomAnchor, paddingTop: 12)
+        emailLabel.anchor(top: usernameLabel.bottomAnchor, left: leftAnchor, paddingTop: 20, paddingLeft: 40)
+        
+        addSubview(editEmailButton)
+        editEmailButton.centerY(inView: emailLabel)
+        editEmailButton.anchor(right: rightAnchor, paddingRight: 40)
     }
     
     required init?(coder: NSCoder) {
@@ -99,13 +122,17 @@ class UserProfileView: UIView {
     }
     //MARK: - Helpers
     
+   
+    
     func configure() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self ,
                   let user = self.user,
                   let url = user.profileImageUrl else {return}
-            self.usernameLabel.text = user.username
-            self.emailLabel.text = user.email
+            
+            self.usernameLabel.text = "Username: \(user.username)"
+            self.emailLabel.text = "Email: \(user.email)"
+            
             if user.profileImageUrl != "" {
                 self.profileImageView.sd_setImage(with: URL(string: url))
                 self.addPhotoButton.setTitle("Change Photo", for: .normal)
@@ -125,9 +152,15 @@ class UserProfileView: UIView {
     }
     
     @objc func handleAddPhoto() {
-        print("DEBUG: add photo button tapped")
         guard let delegate = self.delegate else {return}
         delegate.handleShowImagePicker()
     }
     
+    @objc func handleEditUsername() {
+        delegate?.handleEditUsername()
+    }
+    
+    @objc func handleEditEmail() {
+        delegate?.handleEditEmail()
+    }
 }

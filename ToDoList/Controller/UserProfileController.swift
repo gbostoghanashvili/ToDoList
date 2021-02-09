@@ -88,6 +88,16 @@ extension UserProfileController: UserProfileViewDelegate {
         let picker = configureImagePicker()
         picker.delegate = self
     }
+    
+    func handleEditUsername() {
+        let controller = EditController()
+        
+    }
+    
+    func handleEditEmail() {
+        print("DEBUG: handle edit email")
+
+    }
 }
 
 

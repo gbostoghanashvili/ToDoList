@@ -8,13 +8,19 @@
 import UIKit
 import Firebase
 
+protocol TasksControllerDelegate: class {
+    func handleMenuToggle()
+}
+
 class TasksController: UIViewController {
     
     //MARK: - Properties
 
     private let cellId = "TasksCell"
     
-    private var tasks = [Task]() {
+    weak var delegate: TasksControllerDelegate?
+
+     var tasks = [Task]() {
         didSet {self.tableView.reloadData()}
     }
     private let tableView = UITableView()
@@ -28,25 +34,16 @@ class TasksController: UIViewController {
        
        return label
    }()
-    private lazy var logoutButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Logout", for: .normal)
-        button.tintColor = .black
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
-        
-        return button
-    }()
     
-    private lazy var userProfileButton: UIButton = {
+    private lazy var sideMenuButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "person.circle"), for: .normal)
+        button.setImage(UIImage(systemName: "line.horizontal.3.circle"), for: .normal)
+        button.addTarget(self, action: #selector(handleShowSideMenu), for: .touchUpInside)
         button.tintColor = .black
-        button.addTarget(self, action: #selector(handleShowUserProfile), for: .touchUpInside)
-        button.setDimensions(height: 30, width: 30)
         
         return button
     }()
+
     
     //MARK: - Lifecycle
 
@@ -96,6 +93,7 @@ class TasksController: UIViewController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(textDidChange),
                                                name: UITextField.textDidChangeNotification, object: nil)
+        
         fetchTasks()
 
         configureRefresher()
@@ -110,18 +108,16 @@ class TasksController: UIViewController {
     }
     
     func setConstraintsForViews() {
-        view.addSubview(logoutButton)
-        logoutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,paddingTop: 12, paddingLeft: 12)
         
-        view.addSubview(userProfileButton)
-        userProfileButton.centerY(inView: logoutButton)
-        userProfileButton.anchor(right: view.rightAnchor, paddingRight: 12)
+        view.addSubview(sideMenuButton)
+        sideMenuButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            paddingTop: 16, paddingLeft: 12, width: 80, height: 30)
         
         
         view.addSubview(addTaskTextfield)
         addTaskTextfield.centerX(inView: view)
-        addTaskTextfield.anchor(top: logoutButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                                paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        addTaskTextfield.anchor(top: sideMenuButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                                paddingTop: 20, paddingLeft: 32, paddingRight: 32)
         addTaskTextfield.delegate = self
         
         view.addSubview(characterCountLabel)
@@ -151,25 +147,8 @@ class TasksController: UIViewController {
         nav.modalPresentationStyle = .fullScreen
         tasks.removeAll()
 
-        
+
         present(nav, animated: true)
-    }
-    
-    func presentLogoutAlert(){
-        let alert = UIAlertController(title: "Log out?", message: nil, preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let logoutAction = UIAlertAction(title: "Log out", style: .default) { _ in
-            do {
-                try Auth.auth().signOut()
-                self.presentLoginController()
-                
-            } catch {
-                print("DEBUG: Failed to sign out")
-            }
-        }
-        alert.addAction(logoutAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
     }
   
     //MARK: - Actions
@@ -180,10 +159,6 @@ class TasksController: UIViewController {
         characterCountLabel.text = "\(count)/50"
     }
     
-    @objc func handleLogout() {
-        presentLogoutAlert()
-    }
-    
     @objc func handleRefresh() {
         tasks.removeAll()
         fetchTasks()
@@ -192,6 +167,11 @@ class TasksController: UIViewController {
     @objc func handleShowUserProfile() {
         let controller = UserProfileController()
         navigationController?.pushViewController(controller, animated: true)
+        }
+    
+    @objc func handleShowSideMenu() {
+        guard let delegate = self.delegate else {return}
+        delegate.handleMenuToggle()
         }
     }
 
@@ -218,7 +198,8 @@ extension TasksController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let task = tasks[indexPath.row]
-        let controller = EditTaskController(task: task)
+        let controller = EditController()
+        controller.task = task
         navigationController?.pushViewController(controller, animated: true)
     }
 }

@@ -7,12 +7,12 @@
 
 import UIKit
 
-class EditTaskController: UIViewController {
+class EditController: UIViewController {
     
     //MARK: - Properties
 
     let editTaskTextfield = CustomTextField(placeholder: "Add task")
-    private let task: Task
+    
     private let characterCountLabel: UILabel = {
        let label = UILabel()
         label.textColor = .lightGray
@@ -21,20 +21,18 @@ class EditTaskController: UIViewController {
        
        return label
    }()
+    
+    var task: Task? {
+        didSet {
+            guard let task = self.task else {return}
+            editTaskTextfield.text = task.title
+        }
+    }
   
     private lazy var saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSaveTask))
 
     //MARK: - Lifecycle
     
-    init(task: Task) {
-        editTaskTextfield.text = task.title
-        self.task = task
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,8 +94,10 @@ class EditTaskController: UIViewController {
     
     @objc func handleSaveTask () {
         
+        guard let task = task,
+              let newTitle = editTaskTextfield.text else {return}
+
         navigationController?.popViewController(animated: true)
-        guard let newTitle = editTaskTextfield.text else {return}
         Service.editTask(title: newTitle, taskUid: task.uid)
         
     }
@@ -110,7 +110,7 @@ class EditTaskController: UIViewController {
 
     //MARK: - Textfield Delegate
 
-    extension EditTaskController: UITextFieldDelegate {
+    extension EditController: UITextFieldDelegate {
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             textField.resignFirstResponder()
             
