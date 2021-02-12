@@ -94,8 +94,9 @@ extension UIView {
         guard let view = superview else { return }
         anchor(top: view.topAnchor, left: view.leftAnchor,
                bottom: view.bottomAnchor, right: view.rightAnchor)
+        }
     }
-}
+
 
 
 extension UIViewController {
@@ -104,7 +105,7 @@ extension UIViewController {
 
     func checkMaxLength(_ textField: UITextField) {
         guard let text = textField.text else {return}
-        if (text.count) > 100 {
+        if (text.count) > 50 {
             textField.deleteBackward()
         }
     }

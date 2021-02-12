@@ -31,6 +31,10 @@
 		CE4C211825CD2B45009FDBD9 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C211725CD2B45009FDBD9 /* SignUpView.swift */; };
 		CE4C212425CD3393009FDBD9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C212325CD3393009FDBD9 /* User.swift */; };
 		CE4C212725CD352A009FDBD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C212625CD352A009FDBD9 /* Constants.swift */; };
+		CE96EC8925D67733009DB880 /* MenuOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96EC8825D67733009DB880 /* MenuOptions.swift */; };
+		CE96EC8D25D677D8009DB880 /* RecoverPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96EC8C25D677D8009DB880 /* RecoverPasswordView.swift */; };
+		CE96EC9125D67C82009DB880 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96EC9025D67C82009DB880 /* TasksView.swift */; };
+		CE96EC9725D691C4009DB880 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96EC9625D691C4009DB880 /* EditView.swift */; };
 		CEF5726525D14A5A00A692AF /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5726425D14A5A00A692AF /* UserProfileController.swift */; };
 		CEF5726825D14A6F00A692AF /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5726725D14A6F00A692AF /* UserProfileView.swift */; };
 		CEF5726B25D14A9900A692AF /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5726A25D14A9900A692AF /* ImageService.swift */; };
@@ -39,6 +43,9 @@
 		CEF572F825D1658A00A692AF /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572F725D1658A00A692AF /* ContainerController.swift */; };
 		CEF572FC25D1659100A692AF /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572FB25D1659100A692AF /* MenuController.swift */; };
 		CEF5730025D165CD00A692AF /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF572FF25D165CD00A692AF /* MenuHeader.swift */; };
+		CEF5730625D26B2400A692AF /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5730525D26B2400A692AF /* SettingsController.swift */; };
+		CEF5730A25D26BF500A692AF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5730925D26BF500A692AF /* SettingsView.swift */; };
+		CEF5730E25D26C5A00A692AF /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF5730D25D26C5A00A692AF /* BackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +87,10 @@
 		CE4C211725CD2B45009FDBD9 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		CE4C212325CD3393009FDBD9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CE4C212625CD352A009FDBD9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE96EC8825D67733009DB880 /* MenuOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptions.swift; sourceTree = "<group>"; };
+		CE96EC8C25D677D8009DB880 /* RecoverPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPasswordView.swift; sourceTree = "<group>"; };
+		CE96EC9025D67C82009DB880 /* TasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
+		CE96EC9625D691C4009DB880 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		CEF5726425D14A5A00A692AF /* UserProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		CEF5726725D14A6F00A692AF /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		CEF5726A25D14A9900A692AF /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
@@ -90,6 +101,9 @@
 		CEF572F725D1658A00A692AF /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
 		CEF572FB25D1659100A692AF /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		CEF572FF25D165CD00A692AF /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
+		CEF5730525D26B2400A692AF /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		CEF5730925D26BF500A692AF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CEF5730D25D26C5A00A692AF /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		EC48A698A22C1F24FDD0338A /* Pods_ToDoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBD52B37314EA4B0B971D63 /* Pods-ToDoListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoListTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoListTests/Pods-ToDoListTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,6 +214,7 @@
 				CE4C20BA25CBE6E0009FDBD9 /* TasksController.swift */,
 				CE4C20E125CC0C48009FDBD9 /* EditController.swift */,
 				CEF5726425D14A5A00A692AF /* UserProfileController.swift */,
+				CEF5730525D26B2400A692AF /* SettingsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -207,14 +222,9 @@
 		CE4C20D025CBE7B1009FDBD9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CE4C20D325CBE95A009FDBD9 /* TaskCell.swift */,
-				CE4C20DC25CBF185009FDBD9 /* CustomTextField.swift */,
-				CE4C210F25CD2A3C009FDBD9 /* AuthenticationButton.swift */,
-				CE4C211225CD2AFD009FDBD9 /* AttributedButton.swift */,
-				CE4C210C25CD2A01009FDBD9 /* LoginView.swift */,
-				CE4C211725CD2B45009FDBD9 /* SignUpView.swift */,
-				CEF5726725D14A6F00A692AF /* UserProfileView.swift */,
-				CEF572FF25D165CD00A692AF /* MenuHeader.swift */,
+				CE96EC7F25D67660009DB880 /* MainView */,
+				CE96EC8025D676A3009DB880 /* Cell */,
+				CE96EC8525D676BC009DB880 /* CustomViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -224,6 +234,7 @@
 			children = (
 				CE4C20D925CBECD5009FDBD9 /* Task.swift */,
 				CE4C212325CD3393009FDBD9 /* User.swift */,
+				CE96EC8825D67733009DB880 /* MenuOptions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -236,6 +247,40 @@
 				CEF5726D25D14ADC00A692AF /* RecoverPasswordController.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		CE96EC7F25D67660009DB880 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				CE4C210C25CD2A01009FDBD9 /* LoginView.swift */,
+				CE4C211725CD2B45009FDBD9 /* SignUpView.swift */,
+				CEF5730925D26BF500A692AF /* SettingsView.swift */,
+				CEF5726725D14A6F00A692AF /* UserProfileView.swift */,
+				CE96EC8C25D677D8009DB880 /* RecoverPasswordView.swift */,
+				CE96EC9025D67C82009DB880 /* TasksView.swift */,
+				CE96EC9625D691C4009DB880 /* EditView.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		CE96EC8025D676A3009DB880 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CE4C20D325CBE95A009FDBD9 /* TaskCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CE96EC8525D676BC009DB880 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				CE4C20DC25CBF185009FDBD9 /* CustomTextField.swift */,
+				CE4C210F25CD2A3C009FDBD9 /* AuthenticationButton.swift */,
+				CE4C211225CD2AFD009FDBD9 /* AttributedButton.swift */,
+				CEF572FF25D165CD00A692AF /* MenuHeader.swift */,
+				CEF5730D25D26C5A00A692AF /* BackButton.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		CEF572A125D14D5700A692AF /* ToDoListTests */ = {
@@ -428,16 +473,23 @@
 				CE4C211325CD2AFD009FDBD9 /* AttributedButton.swift in Sources */,
 				CE4C20E225CC0C48009FDBD9 /* EditController.swift in Sources */,
 				CEF5730025D165CD00A692AF /* MenuHeader.swift in Sources */,
+				CE96EC9125D67C82009DB880 /* TasksView.swift in Sources */,
+				CE96EC8925D67733009DB880 /* MenuOptions.swift in Sources */,
 				CE4C212725CD352A009FDBD9 /* Constants.swift in Sources */,
 				CE4C20DD25CBF185009FDBD9 /* CustomTextField.swift in Sources */,
+				CEF5730A25D26BF500A692AF /* SettingsView.swift in Sources */,
 				CEF5726E25D14ADC00A692AF /* RecoverPasswordController.swift in Sources */,
+				CE96EC9725D691C4009DB880 /* EditView.swift in Sources */,
 				CE4C20D725CBE9E3009FDBD9 /* Extensions.swift in Sources */,
 				CE4C20D425CBE95A009FDBD9 /* TaskCell.swift in Sources */,
 				CE4C20BB25CBE6E0009FDBD9 /* TasksController.swift in Sources */,
 				CE4C20FF25CD2989009FDBD9 /* Service.swift in Sources */,
+				CEF5730E25D26C5A00A692AF /* BackButton.swift in Sources */,
 				CE4C20B725CBE6E0009FDBD9 /* AppDelegate.swift in Sources */,
 				CEF5726525D14A5A00A692AF /* UserProfileController.swift in Sources */,
 				CE4C210225CD2991009FDBD9 /* AuthService.swift in Sources */,
+				CEF5730625D26B2400A692AF /* SettingsController.swift in Sources */,
+				CE96EC8D25D677D8009DB880 /* RecoverPasswordView.swift in Sources */,
 				CE4C211025CD2A3C009FDBD9 /* AuthenticationButton.swift in Sources */,
 				CE4C20DA25CBECD5009FDBD9 /* Task.swift in Sources */,
 				CE4C211825CD2B45009FDBD9 /* SignUpView.swift in Sources */,

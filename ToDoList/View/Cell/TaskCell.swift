@@ -60,8 +60,7 @@ class TaskCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        
+                
         contentView.addSubview(checkMarkButton)
         checkMarkButton.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 22)
         

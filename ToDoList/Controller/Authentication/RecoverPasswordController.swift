@@ -12,32 +12,8 @@ class RecoverPasswordController: UIViewController {
     
     //MARK: - Properties
     
-    private let emailTextfield = CustomTextField(placeholder: "Enter your email", type: .emailAddress)
-    private let resetPasswordButton = AuthenticationButton(title: "Reset")
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = .black
-        let image = UIImage(systemName: "chevron.left")
-        button.setImage(image, for: .normal)
-        button.setDimensions(height: 30, width: 30)
-        button.addTarget(self, action: #selector(handleBackButtonTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
-    var email: String?
-    
-    private var formIsValid: Bool {
-        return email?.isEmpty == false
-    }
-    
-    private var buttonBackgroundColor: UIColor {
-        return formIsValid ? UIColor.systemBlue : UIColor.systemBlue.withAlphaComponent(0.5)
-    }
-    
-    private var buttonTitleColor: UIColor {
-        return formIsValid ? .white : UIColor(white: 1, alpha: 0.7)
-    }
+    private var email: String
+    private lazy var recoverPasswordView = RecoverPasswordView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
     
     
     //MARK: - Lifecycle
@@ -47,41 +23,32 @@ class RecoverPasswordController: UIViewController {
         configureUi()
     }
     
+    init(email: String) {
+        self.email = email
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - Helpers
     
     func configureUi() {
-        guard let email = email else {return}
-        emailTextfield.text = email
         view.backgroundColor = .white
-        
-        view.addSubview(backButton)
-        backButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                          paddingTop: 16, paddingLeft: 16)
-        let stack = configureStack()
-        view.addSubview(stack)
-        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                                        paddingTop: 100, paddingLeft: 16, paddingRight: 16)
+        view.addSubview(recoverPasswordView)
+        recoverPasswordView.email = email
+        recoverPasswordView.delegate = self
+    }
+}
 
-        emailTextfield.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
-        resetPasswordButton.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
-    }
     
-    func configureStack() -> UIStackView {
-        let stack = UIStackView(arrangedSubviews: [emailTextfield, resetPasswordButton])
-        stack.axis = .vertical
-        stack.spacing = 20
-        
-        return stack
-    }
-    
-    //MARK: - Actions
-    
-    @objc func handleBackButtonTapped() {
+extension RecoverPasswordController: RecoverPasswordViewDelegate {
+    func handleBackButtonAction() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func handleReset() {
-        guard let email = emailTextfield.text else {return}
+    func handleRecoverPassword(email: String) {
         showLoader(true)
         AuthService.resetPassword(withEmail: email) { error in
             self.showLoader(false)
@@ -92,16 +59,5 @@ class RecoverPasswordController: UIViewController {
             self.showMessage(withTitle: "Success", message: "We sent a link to your email to reset your password", dissmissalText: "ok")
         }
     }
-    
-    @objc func textDidChange (sender: UITextField) {
-        if sender == emailTextfield {
-            email = sender.text
-        }
-        resetPasswordButton.backgroundColor = buttonBackgroundColor
-        resetPasswordButton.setTitleColor(buttonTitleColor, for: .normal)
-        resetPasswordButton.isEnabled = formIsValid
-    }
 }
-
-    
 

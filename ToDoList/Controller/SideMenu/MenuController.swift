@@ -11,20 +11,6 @@ protocol MenuControllerDelegate: class {
     func didSelect(option: MenuOptions)
 }
 
-enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
-    case settings
-    case userProfile
-    case logout
-    
-    var description: String {
-        switch self {
-        case .settings: return "Settings"
-        case .userProfile: return "User Profile"
-        case .logout: return "Log Out"
-        }
-    }
-}
-
 class MenuController: UITableViewController {
     
     //MARK: - Properties
@@ -37,11 +23,16 @@ class MenuController: UITableViewController {
                                                            width: self.view.frame.width,
                                                            height: 140))
     
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchUser()
     }
     
@@ -53,12 +44,9 @@ class MenuController: UITableViewController {
         }
     }
     
-    
     //MARK: - Helpers
     
     func configureTableView() {
-        view.backgroundColor = .white
-
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -67,12 +55,18 @@ class MenuController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.tableHeaderView = menuHeader
     }
-    
-    
-    //MARK: -  Actions
 }
 
-// MARK: - UITableViewDelegate/DataSource
+// MARK: - UITableViewDelegate
+
+extension MenuController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
+        delegate?.didSelect(option: option)
+    }
+}
+
+// MARK: - UITableView DataSource
 
 extension MenuController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,10 +80,5 @@ extension MenuController {
         cell.textLabel?.text = option.description
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
-        delegate?.didSelect(option: option)
     }
 }

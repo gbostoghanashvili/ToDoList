@@ -65,4 +65,22 @@ struct Service {
     static func setProfileImageUrl(forUser user: User, imageUrl url: String) {
         API.collectionUsers.document(user.uid).updateData(["profileImageUrl" : url])
     }
+    
+    static func updateUser(username: String) {
+        guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
+        API.collectionUsers.document(currentUserUid).updateData(["username" : username])
+    }
+    
+    static func updateUser(email: String, completion: @escaping(FirestoreCompletion)) {
+        guard let currentUser = Auth.auth().currentUser else {return}
+        
+        currentUser.updateEmail(to: email, completion: completion)
+        API.collectionUsers.document(currentUser.uid).updateData(["email" : email])
+    }
+    
+    static func removeUserProfileImageUrl() {
+        guard let currentUserUid = Auth.auth().currentUser?.uid else {return}
+        API.collectionUsers.document(currentUserUid).updateData(["profileImageUrl" : ""])
+
+    }
 }

@@ -7,33 +7,25 @@
 
 import UIKit
 
+enum Editable {
+    case task, email, username
+}
+
 class EditController: UIViewController {
     
     //MARK: - Properties
 
-    let editTaskTextfield = CustomTextField(placeholder: "Add task")
+    private lazy var editView = EditView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
     
-    private let characterCountLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = .lightGray
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "0/50"
-       
-       return label
-   }()
+    private let changeingField: Editable
     
-    var task: Task? {
-        didSet {
-            guard let task = self.task else {return}
-            editTaskTextfield.text = task.title
-        }
-    }
+    let text: String
+    let taskId: String?
   
-    private lazy var saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSaveTask))
+    private lazy var saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
 
     //MARK: - Lifecycle
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUi()
@@ -43,10 +35,18 @@ class EditController: UIViewController {
         super.viewWillAppear(animated)
         configureNavBar()
     }
+
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: nil)
+    init(field: Editable, text: String, taskID: String? = nil) {
+        self.changeingField = field
+        self.text = text
+        self.taskId = taskID
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
         //MARK: - Helper Methods
@@ -56,69 +56,66 @@ class EditController: UIViewController {
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = saveButton
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange),
-                                               name: UITextField.textDidChangeNotification, object: nil)
     }
         
     func configureUi() {
         view.backgroundColor = .white
-        
-        view.addSubview(editTaskTextfield)
-        editTaskTextfield.centerX(inView: view)
-        editTaskTextfield.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                                paddingTop: 32, paddingLeft: 32, paddingRight: 32)
-        
-        view.addSubview(characterCountLabel)
-        characterCountLabel.anchor(bottom: editTaskTextfield.bottomAnchor, right: editTaskTextfield.rightAnchor, paddingBottom: -18)
-        
-        editTaskTextfield.becomeFirstResponder()
-        editTaskTextfield.delegate = self
-        
+        view.addSubview(editView)
+        editView.text = text
+        editView.delegate = self
+        editView.editTextfield.delegate = self
     }
     
         //MARK: - Actions
-    
-    @objc func textDidChange() {
-        guard let text = editTaskTextfield.text else {return}
-        if !text.isEmpty {
-            saveButton.isEnabled = true
-        } else {
-            saveButton.isEnabled = false
-        }
-        
-        checkMaxLength(editTaskTextfield)
-        guard let count = editTaskTextfield.text?.count else {return}
-        characterCountLabel.text = "\(count)/50"
-    }
-    
-    @objc func handleSaveTask () {
-        
-        guard let task = task,
-              let newTitle = editTaskTextfield.text else {return}
 
-        navigationController?.popViewController(animated: true)
-        Service.editTask(title: newTitle, taskUid: task.uid)
+    @objc func handleSave () {
+        guard let newTitle = editView.editTextfield.text else {return}
         
+        switch changeingField {
+        case .task:
+            guard let taskId = self.taskId else {return}
+            Service.editTask(title: newTitle, taskUid: taskId)
+            
+        case .email:
+            Service.updateUser(email: newTitle) { error in
+                if let error = error {
+                    print("DEBUG: Error while updateing user email\(error.localizedDescription)")
+                    return
+                }
+            }
+            
+        case .username:
+            Service.updateUser(username: newTitle)
+        }
+        navigationController?.popViewController(animated: true)
     }
-    
+
     @objc func handleCancel () {
         navigationController?.popViewController(animated: true)
     }
-
 }
 
     //MARK: - Textfield Delegate
 
-    extension EditController: UITextFieldDelegate {
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            textField.resignFirstResponder()
-            
-            return true
-        }
+extension EditController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         
-        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-            restrictWhiteSpaces(textField: textField, range: range, replacementString: string)
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        restrictWhiteSpaces(textField: textField, range: range, replacementString: string)
+    }
+}
+
+extension EditController: EditViewDelegate {
+    func textDidChange(_ textField: UITextField, label: UILabel) {
+        checkMaxLength(textField)
+        guard let count = textField.text?.count else {return}
+        label.text = "\(count)/50"
         }
     }
+    
+    
 

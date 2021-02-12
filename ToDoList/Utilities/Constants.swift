@@ -11,3 +11,7 @@ struct API {
     static let collectionUsers = Firestore.firestore().collection("users")
     static let collectionTasks = Firestore.firestore().collection("tasks")
 }
+
+struct Constants {
+    static let tasksCellId = "TasksCell"
+}

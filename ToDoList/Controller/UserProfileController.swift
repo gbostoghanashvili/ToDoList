@@ -8,6 +8,7 @@
 import UIKit
 
 class UserProfileController: UIViewController {
+    
     //MARK: - Properties
     
     private let userProfileView = UserProfileView()
@@ -19,13 +20,20 @@ class UserProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUi()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
         fetchUser()
     }
     
     //MARK: - API
     
     func fetchUser() {
+        showLoader(true)
         Service.fetchUser { user in
+            self.showLoader(false)
             self.user = user
             self.userProfileView.user = user
         }
@@ -39,8 +47,6 @@ class UserProfileController: UIViewController {
         view.addSubview(userProfileView)
         userProfileView.fillSuperview()
         userProfileView.delegate = self
-        
-
     }
     
     func configureImagePicker() -> UIImagePickerController {
@@ -66,9 +72,17 @@ class UserProfileController: UIViewController {
             
             self?.present(imagePicker, animated: true, completion: nil)
         }
+        
+        let removePhotoAction = UIAlertAction(title: "Remove Picture", style: .default) { _ in
+            Service.removeUserProfileImageUrl()
+            self.fetchUser()
+        }
 
         alert.addAction(fromCameraAction)
         alert.addAction(fromLlibraryAction)
+        if user?.profileImageUrl != "" {
+            alert.addAction(removePhotoAction)
+        }
         alert.addAction(cancelAction)
       
         present(alert, animated: true)
@@ -77,7 +91,6 @@ class UserProfileController: UIViewController {
     }
 
 }
-
 
 extension UserProfileController: UserProfileViewDelegate {
     func handleBackButtonTapped() {
@@ -90,13 +103,19 @@ extension UserProfileController: UserProfileViewDelegate {
     }
     
     func handleEditUsername() {
-        let controller = EditController()
+        guard let text = user?.username else {return}
+        let controller = EditController(field: .username, text: text)
+//        controller.usernameText = user?.username
         
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func handleEditEmail() {
-        print("DEBUG: handle edit email")
-
+        guard let text = user?.email else {return}
+        let controller = EditController(field: .email, text: text)
+//        controller.emailText = user?.email
+        
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -114,7 +133,7 @@ func imagePickerController(_ picker: UIImagePickerController,
             Service.setProfileImageUrl(forUser: user, imageUrl: imageUrl)
             self.showLoader(false)
             self.userProfileView.addPhotoButton.setTitle("Change Photo", for: .normal)
-        
+            self.fetchUser()
     }
 
     userProfileView.profileImageView.layer.masksToBounds = true

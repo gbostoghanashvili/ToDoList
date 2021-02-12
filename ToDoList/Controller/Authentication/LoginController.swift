@@ -29,12 +29,7 @@ class LoginController: UIViewController {
         loginView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.bottomAnchor, right: view.rightAnchor)
         loginView.delegate = self
-    }
-    
-    
-
-    //MARK: - API
-    
+    } 
 }
 
 extension LoginController: LoginViewDelegate {
@@ -54,8 +49,9 @@ extension LoginController: LoginViewDelegate {
     }
     
     func handleRecoverPassword() {
-        let controller = RecoverPasswordController()
-        controller.email = loginView.emailTextField.text
+        guard let email = loginView.emailTextField.text else {return}
+        
+        let controller = RecoverPasswordController(email: email)
         navigationController?.pushViewController(controller, animated: true)
     }
     

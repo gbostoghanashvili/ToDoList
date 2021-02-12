@@ -24,7 +24,6 @@ class ContainerController: UIViewController {
         configureMenuController()
     }
     
-    
     //MARK: - Helpers
     
     func configureTasksController() {
@@ -54,6 +53,7 @@ class ContainerController: UIViewController {
             }, completion: nil)
         }
     }
+    
     func presentLoginController() {
         let controller = LoginController()
         let nav = UINavigationController(rootViewController: controller)
@@ -69,9 +69,10 @@ class ContainerController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let logoutAction = UIAlertAction(title: "Log out", style: .default) { _ in
             do {
+                self.showLoader(true)
                 try Auth.auth().signOut()
+                self.showLoader(false)
                 self.presentLoginController()
-                
             } catch {
                 print("DEBUG: Failed to sign out")
             }
@@ -80,8 +81,6 @@ class ContainerController: UIViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true)
     }
-    
-    //MARK: -  Actions
 }
 
 // MARK: - TasksControllerDelegate
@@ -93,16 +92,15 @@ extension ContainerController: TasksControllerDelegate {
     }
 }
 
-
 // MARK: - MenuControllerDelegate
 
 extension ContainerController: MenuControllerDelegate {
     func didSelect(option: MenuOptions) {
-        print("tapped")
-        
             switch option {
             case .settings:
-                print("DEBUG: Handle show settings here")
+                let controller = SettingsController()
+                handleMenuToggle()
+                navigationController?.pushViewController(controller, animated: true)
             case .userProfile:
                 let controller = UserProfileController()
                 handleMenuToggle()

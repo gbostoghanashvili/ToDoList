@@ -21,7 +21,6 @@ class MenuHeader: UIView {
         
     private lazy var profileImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .black
         view.clipsToBounds = true
 
         return view
@@ -49,7 +48,7 @@ class MenuHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .lightGray
+        backgroundColor = .init(white: 0.5, alpha: 0.2)
         
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor, left: leftAnchor,
